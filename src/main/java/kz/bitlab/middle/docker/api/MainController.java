@@ -17,14 +17,14 @@ public class MainController {
 
     private final TaskService taskService;
 
-    @GetMapping(value = "/getTasks")
-    public ResponseEntity<List<TaskDTO>> getTasks(@RequestParam(name = "id") Long authorId){
+    @GetMapping(value = "/getTasks/{authorId}")
+    public ResponseEntity<List<TaskDTO>> getTasks(@PathVariable(name = "authorId") Long authorId){
         return new ResponseEntity<>(taskService.getTasks(authorId), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getTask")
-    public ResponseEntity<TaskDTO> getTask(@RequestParam (name = "taskId") Long taskId,
-                                           @RequestParam (name = "userId") Long authorId){
+    @GetMapping(value = "/getTask/taskId={taskId}&userId={userId}")
+    public ResponseEntity<TaskDTO> getTask(@PathVariable (name = "taskId") Long taskId,
+                                           @PathVariable (name = "userId") Long authorId){
         return new ResponseEntity<>(taskService.getTask(taskId, authorId), HttpStatus.OK);
     }
 
@@ -39,7 +39,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/deleteTask/{id}")
-    public void deleteTask(@RequestParam(name = "id") Long id){
+    public void deleteTask(@PathVariable(name = "id") Long id){
         taskService.deleteTask(id);
     }
 }

@@ -32,8 +32,11 @@ public class TaskService {
     }
 
     public TaskDTO getTask(Long taskId, Long userId){
-        TaskDTO taskDTO = taskMapper.toDto(taskRepository.findTaskById(taskId));
-        if(taskDTO.getAuthor().getId().equals(userId)){
+        Task task = taskRepository.findTaskById(taskId);
+        TaskDTO taskDTO = taskMapper.toDto(task);
+        UserDTO userDTO = userService.getUser(task.getAuthorId());
+        if(userDTO.getId().equals(userId)){
+            taskDTO.setAuthor(userDTO);
             return taskDTO;
         } else {
             return null;
@@ -42,6 +45,7 @@ public class TaskService {
 
     public Task addTask(TaskDTO taskDto){
         Task task = taskMapper.toEntity(taskDto);
+        task.setAuthorId(taskDto.getAuthor().getId());
         return taskRepository.save(task);
     }
 
@@ -49,6 +53,7 @@ public class TaskService {
         Task task = new Task();
         if(taskRepository.findById(taskDTO.getId()).isPresent()){
             task = taskMapper.toEntity(taskDTO);
+            task.setAuthorId(taskDTO.getAuthor().getId());
             return taskRepository.save(task);
         }
         return task;

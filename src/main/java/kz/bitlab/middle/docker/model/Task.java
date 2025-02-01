@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class Task {
     private Long id;
     private String title;
     private String description;
-    private LocalDateTime date;
+    private LocalDate dueDate;
     private String status;
     private Long authorId;
 }

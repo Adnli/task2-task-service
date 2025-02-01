@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    @Mapping(target = "dueDate", source = "date", dateFormat = "dd.MM.yyyy")
+    @Mapping(target = "date", source = "dueDate")
     TaskDTO toDto(Task task);
 
-    @Mapping(target = "date", source = "dueDate", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "dueDate", source = "date")
     Task toEntity(TaskDTO taskDto);
 }

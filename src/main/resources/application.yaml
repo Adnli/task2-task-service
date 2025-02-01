@@ -6,6 +6,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 12345
+  jackson:
+    serialization:
+      write-durations-as-timestamps: false
   jpa:
     show-sql: true
     hibernate:
