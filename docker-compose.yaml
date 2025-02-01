@@ -1,0 +1,48 @@
+version: '3.1'
+services:
+  user-service:
+    image: 'user-service-iso'
+    container_name: 'user-service-container'
+    depends_on:
+      - user-db
+    ports:
+      - 8000:8080
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+
+  user-db:
+    image: 'postgres'
+    container_name: user-db-postgres
+    ports:
+      - 2345:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=postgres
+
+  task-service:
+    image: 'task-service-iso'
+    container_name: 'task-service-container'
+    depends_on:
+      - task-db
+    ports:
+      - 8001:8081
+    environment:
+      - SERVER_PORT=8081
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://task-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=54321
+      - FEIGN_USER_URL=http://user-service:8080/api/user
+
+  task-db:
+    image: 'postgres'
+    container_name: task-db-postgres
+    ports:
+      - 2346:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=54321
+      - POSTGRES_DB=postgres
