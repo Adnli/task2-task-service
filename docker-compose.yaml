@@ -1,14 +1,14 @@
 version: '3.1'
 services:
   user-service:
-    image: 'user-service-iso'
+    image: 'adnli/user-service-iso'
     container_name: 'user-service-container'
     depends_on:
       - user-db
     ports:
-      - 8000:8080
+      - 8001:8081
     environment:
-      - SERVER_PORT=8080
+      - SERVER_PORT=8081
       - SPRING_DATASOURCE_URL=jdbc:postgresql://user-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
@@ -24,14 +24,14 @@ services:
       - POSTGRES_DB=postgres
 
   task-service:
-    image: 'task-service-iso'
+    image: 'adnli/task-service-iso'
     container_name: 'task-service-container'
     depends_on:
       - task-db
     ports:
-      - 8001:8081
+      - 8000:8080
     environment:
-      - SERVER_PORT=8081
+      - SERVER_PORT=8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://task-db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=54321

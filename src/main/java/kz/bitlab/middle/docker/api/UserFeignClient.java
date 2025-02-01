@@ -9,20 +9,18 @@ import java.util.List;
 @FeignClient(name = "user-feign-client", url = "${feign.user.url}")
 public interface UserFeignClient {
 
-    String USER_SERVICE = "/api/user";
-
-    @GetMapping(value = USER_SERVICE + "/getUsers")
+    @GetMapping(value = "/getUsers")
     List<UserDTO> getUsersDto();
 
-    @GetMapping(value = USER_SERVICE + "/{id}")
+    @GetMapping(value = "/{id}")
     UserDTO getUserDto(@PathVariable(name = "id") Long id);
 
-    @PostMapping(USER_SERVICE + "/updateUser")
+    @PostMapping("/updateUser")
     UserDTO updateUser(UserDTO userDTO);
 
-    @PostMapping(USER_SERVICE + "/addUser")
+    @PostMapping("/addUser")
     UserDTO addUser(UserDTO userDTO);
 
-    @PostMapping(USER_SERVICE + "/deleteUser")
+    @PostMapping("/deleteUser")
     void deleteUser(UserDTO userDTO);
 }
