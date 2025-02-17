@@ -1,4 +1,3 @@
-version: '3.1'
 services:
   user-service:
     image: 'adnli/user-service-iso'
@@ -46,3 +45,31 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=54321
       - POSTGRES_DB=postgres
+
+  minio-file-service:
+    image: quay.io/minio/minio:latest
+    ports:
+      - 9000:9000
+      - 9090:9090
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+    command: server --console-address ":9090" /data
+
+  minio-setup:
+    image: minio/mc
+    depends_on:
+      - minio-file-service
+    environment:
+      MC_HOST: http://admin:admin123@minio-file-service:9000
+    entrypoint: >
+      /bin/sh -c "
+        echo Starting Minio ...;
+        mc alias set minio http://minio-file-service:9000 admin admin123;
+        mc mb minio/first-bucket;
+        exit 0;
+      "
+volumes:
+  minio-data:

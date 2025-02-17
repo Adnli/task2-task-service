@@ -13,6 +13,15 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 5MB
 feign:
   user:
     url: http://localhost:8080/api/user
+
+minio:
+  url: http://localhost:9000
+  username: admin
+  password: admin123
+  bucket: first-bucket
