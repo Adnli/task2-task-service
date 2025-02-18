@@ -69,6 +69,7 @@ services:
         echo Starting Minio ...;
         mc alias set minio http://minio-file-service:9000 admin admin123;
         mc mb minio/first-bucket;
+        mc mb minio/users-photos;
         exit 0;
       "
 volumes:
